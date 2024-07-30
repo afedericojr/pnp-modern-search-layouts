@@ -2,6 +2,11 @@
 
     <style>
         /* Insert your CSS overrides here */
+
+        .template--listItem--tags div {
+            justify-content: flex-start;
+        }
+
         .tagstest {
             display: inline-block;
             padding: 2px 5px;
@@ -121,15 +126,16 @@
                                         {{#if (slot item @root.slots.Tags)}}
                                             <pnp-icon data-name="Tag" aria-hidden="true" data-theme-variant="{{JSONstringify @root.theme}}"></pnp-icon>
                                             <div>
-                                                {{#each (split (slot item @root.slots.Tags) ",") as |tag| }}
-                                                <div class="tagstest">
-                                                    <i class="ms-Icon ms-Icon--MapPin" aria-hidden="true"></i>
-                                                    <a href="?q=Tags:'{{trim tag}}'" data-interception="off">{{tag}}</a>
-                                                </div>
-                                                
+                                                {{#each (split (slot item @root.slots.Tags) ';') as |tag|}}
+                                                    {{#with (split tag '|')}}
+                                                    <div class="tagstest">
+                                                        <i class="ms-Icon ms-Icon--MapPin" aria-hidden="true"></i>
+                                                        <a href="?q=Tags:'{{[2]}}'" data-interception="off">           
+                                                                {{[2]}}
+                                                        </a>
+                                                    </div>
+                                                    {{/with}}
                                                 {{/each}}
-
-                                                
                                             </div>
                                         {{/if}}
                                     </div>
